@@ -6,6 +6,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
+    // SDK range set to 21-29, targeting 94.6% of
+    // currently running Android phones
     defaultConfig {
         applicationId "com.stockmanagerandroid"
         minSdkVersion 21
