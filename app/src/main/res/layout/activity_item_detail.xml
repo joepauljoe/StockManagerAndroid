@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ItemDetailActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cent_vert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_horiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_vert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_vert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <ImageView
+        android:id="@+id/item_detail_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/cent_vert"
+        app:layout_constraintRight_toRightOf="@id/cent_vert"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/static_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/top_horiz"
+        app:layout_constraintLeft_toRightOf="@id/left_vert"
+        />
+
+    <TextView
+        android:id="@+id/static_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID:"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/static_name"
+        app:layout_constraintLeft_toRightOf="@id/left_vert"
+        />
+
+    <TextView
+        android:id="@+id/static_ISQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total In Store Quantity:"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/static_id"
+        app:layout_constraintLeft_toRightOf="@id/left_vert"
+        />
+
+    <TextView
+        android:id="@+id/dynamic_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/top_horiz"
+        app:layout_constraintRight_toLeftOf="@id/right_vert"
+        />
+
+    <TextView
+        android:id="@+id/dynamic_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/static_name"
+        app:layout_constraintRight_toLeftOf="@id/right_vert"
+        />
+
+    <TextView
+        android:id="@+id/dynamic_ISQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/static_id"
+        app:layout_constraintRight_toLeftOf="@id/right_vert"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
