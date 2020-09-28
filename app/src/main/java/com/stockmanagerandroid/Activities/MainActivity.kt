@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.stockmanagerandroid.R
+import com.stockmanagerandroid.Services.API
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +13,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        company_name.text = API.currentUser.companyID
+        store_name.text = API.currentUser.storeID
+        hello_user.text = "Hello, " + API.currentUser.firstName
 
 
         button_x.visibility = View.GONE

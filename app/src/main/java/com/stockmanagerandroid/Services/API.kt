@@ -18,10 +18,11 @@ import java.lang.Thread.sleep
 
 object API {
 
-    private val url = "https://27aa1e2e3d6a.ngrok.io"
+    private val url = "https://smapi.ngrok.io"
     val itemSearchedFor = MutableLiveData<InventoryItem>()
-    val currentUser = MutableLiveData<User>()
+    var currentUser = User()
     val authenticated = MutableLiveData<Boolean>()
+    val accountCreated = MutableLiveData<Boolean>()
     val imageData = MutableLiveData<ByteArray>()
     var errorString = ""
 
@@ -67,7 +68,7 @@ object API {
                 val objectMapper = ObjectMapper()
                 val jsonObject = JSONObject()
                 val json = "application/json; charset=utf-8".toMediaTypeOrNull()
-                jsonObject.put("email", email)
+                jsonObject.put("email", email.toLowerCase())
                 jsonObject.put("password", password)
 
                 val itemClient = OkHttpClient()
@@ -85,7 +86,7 @@ object API {
                 if (user != null) {
                     print("Not null user")
                     user.pk = ""
-                    currentUser.postValue(user)
+                    currentUser = user
                     authenticated.postValue(true)
                 } else {
                     print("Null user")
@@ -162,13 +163,15 @@ object API {
     }
 
     fun createAccount(invitationCode: String, fName: String, lName: String, email: String, password: String, confirmPassword: String) {
-//        if (password != confirmPassword) {
-//            //put some message to the user that they need to fix their confirm password
-//            return
-//        }
+        errorString = ""
+        if (password != confirmPassword) {
+            errorString = "Passwords do not match"
+            return
+        }
 
         val thread = Thread(Runnable {
             try {
+                val objectMapper = ObjectMapper()
                 val jsonObject = JSONObject()
                 val json = "application/json; charset=utf-8".toMediaTypeOrNull()
                 val imageClient = OkHttpClient()
@@ -186,7 +189,18 @@ object API {
 
                 val call = imageClient.newCall(imageRequest)
                 val response = call.execute()
-                Log.d("Response", response.body.toString())
+                val responseBody = response.body?.string()
+                val user = objectMapper.readValue(responseBody, User::class.java)
+                if (user != null) {
+                    print("Not null user")
+                    user.pk = ""
+                    currentUser = user
+                    accountCreated.postValue(true)
+                } else {
+                    print("Null user")
+                    print(response)
+                    accountCreated.postValue(false)
+                }
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()

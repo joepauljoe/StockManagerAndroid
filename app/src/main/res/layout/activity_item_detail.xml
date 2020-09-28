@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Activities.ItemDetailActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="Name:"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/top_horiz"
         app:layout_constraintLeft_toRightOf="@id/left_vert"
         />
@@ -60,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="ID:"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/static_name"
         app:layout_constraintLeft_toRightOf="@id/left_vert"
         />
@@ -71,7 +72,7 @@
         android:layout_height="wrap_content"
         android:text="Total In Store Quantity:"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/static_id"
         app:layout_constraintLeft_toRightOf="@id/left_vert"
         />
@@ -81,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/top_horiz"
         app:layout_constraintRight_toLeftOf="@id/right_vert"
         />
@@ -91,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/static_name"
         app:layout_constraintRight_toLeftOf="@id/right_vert"
         />
@@ -101,9 +102,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="21sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/static_id"
         app:layout_constraintRight_toLeftOf="@id/right_vert"
         />
+
+    <TextView
+        android:id="@+id/locations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
+        android:text="Locations"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/dynamic_ISQ"
+        app:layout_constraintRight_toLeftOf="@id/cent_vert"
+        app:layout_constraintLeft_toRightOf="@id/cent_vert"
+        />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/locations"
+        app:layout_constraintLeft_toRightOf="@id/cent_vert"
+        app:layout_constraintRight_toLeftOf="@id/cent_vert"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

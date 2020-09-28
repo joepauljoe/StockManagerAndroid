@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity(){
         Log.d("Login", "Allowing user in app")
         val loadingIntent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(loadingIntent)
-        finish()
+        finishAffinity()
     }
 
     fun showSuccessfulToast() {

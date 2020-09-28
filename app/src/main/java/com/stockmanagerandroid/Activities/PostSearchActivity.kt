@@ -47,9 +47,11 @@ class PostSearchActivity : AppCompatActivity() {
                                 inJustDecodeBounds = false
                                 var decodedImage =
                                     BitmapFactory.decodeByteArray(it, 0, it.size, this)
-                                decodedImage = rotateBitmap(it, decodedImage)
-                                item_image.setImageBitmap(decodedImage)
-                                item_image.setClipToOutline(true)
+                                if(decodedImage != null) {
+                                    decodedImage = rotateBitmap(it, decodedImage)
+                                    item_image.setImageBitmap(decodedImage)
+                                    item_image.setClipToOutline(true)
+                                }
                             }
                         }
                     })

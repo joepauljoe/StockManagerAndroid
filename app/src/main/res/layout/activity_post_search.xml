@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Activities.PostSearchActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -27,7 +28,7 @@
         app:layout_constraintRight_toRightOf="@id/center_vertical"
         android:text="You searched for:"
         android:textSize="25sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -37,7 +38,7 @@
         app:layout_constraintLeft_toLeftOf="@id/center_vertical"
         app:layout_constraintRight_toRightOf="@id/center_vertical"
         android:textSize="32sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -47,7 +48,7 @@
         app:layout_constraintLeft_toLeftOf="@id/center_vertical"
         app:layout_constraintRight_toRightOf="@id/center_vertical"
         android:textSize="32sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -4,7 +4,13 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import com.stockmanagerandroid.R
 import com.stockmanagerandroid.Services.API
@@ -29,9 +35,12 @@ class ItemDetailActivity : AppCompatActivity() {
                     inJustDecodeBounds = false
                     var decodedImage =
                         BitmapFactory.decodeByteArray(it, 0, it.size, this)
-                    decodedImage = rotateBitmap(it, decodedImage)
-                    item_detail_image.setImageBitmap(decodedImage)
-                    item_detail_image.setClipToOutline(true)
+                    if(decodedImage != null) {
+                        decodedImage = rotateBitmap(it, decodedImage)
+                        item_detail_image.setImageBitmap(decodedImage)
+                        item_detail_image.setClipToOutline(true)
+
+                    }
                 }
             }
         })
@@ -40,6 +49,15 @@ class ItemDetailActivity : AppCompatActivity() {
         dynamic_ISQ.text = (item.backstockQuantity + item.customerAccessibleQuantity).toString()
         dynamic_id.text = item.userDesignatedID
         dynamic_name.text = item.name
+
+        if(item.locations != null) {
+            var i=0
+            for (location in item.locations!!) {
+                
+            }
+        } else {
+            locations.visibility = View.GONE
+        }
 
     }
 }

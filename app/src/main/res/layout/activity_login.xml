@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/yellow_gradient"
     tools:context=".Activities.LoginActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -34,6 +34,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/sm_logo"
+        app:layout_constraintLeft_toRightOf="@id/center_vertical"
+        app:layout_constraintRight_toLeftOf="@id/center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/login_title"
+        android:layout_marginBottom="15dp"/>
+
     <TextView
         android:id="@+id/login_title"
         android:layout_width="wrap_content"
@@ -43,7 +52,8 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="32sp"
-        android:text="StockManager Login"
+        android:text="Login"
+        android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintLeft_toLeftOf="@id/center_vertical"
@@ -103,8 +113,9 @@
         android:selectAllOnFocus="true"
         android:textSize="16sp"
         android:paddingLeft="8dp"
-        android:paddingTop="4dp"
         android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:background="@drawable/edit_text_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +130,7 @@
         android:paddingLeft="8dp"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
+        android:background="@drawable/edit_text_border"
         android:imeActionLabel="Sign In"
         android:textSize="16sp"
         android:imeOptions="actionDone"
@@ -139,6 +151,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginBottom="64dp"
         android:enabled="true"
+        android:background="@color/black"
         android:textSize="16sp"
         android:text="Login"
         android:textColor="@color/white"
@@ -161,8 +174,8 @@
         android:layout_marginBottom="64dp"
         android:enabled="true"
         android:textSize="12sp"
-        android:text="Create an Account"
-        android:textColor="@color/colorPrimary"
+        android:text="@string/create_account"
+        android:textColor="@color/black"
         android:textAllCaps="false"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
