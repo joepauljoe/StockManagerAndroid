@@ -1,11 +1,22 @@
 package com.stockmanagerandroid.Activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.TransitionManager
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import com.stockmanagerandroid.Adapters.LocationsAdapter
 import com.stockmanagerandroid.R
 import com.stockmanagerandroid.Services.API
+import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -110,5 +121,53 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("itemID", item_number_search.text.toString())
             startActivity(intent)
         }
+
+        search_by_name.setOnClickListener{
+            val inflater: LayoutInflater =
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+            val view = inflater.inflate(R.layout.layout_search_by_name_popup, null)
+
+            val popupWindow = PopupWindow(
+                view,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+            )
+            val name_edit = view.findViewById<EditText>(R.id.name_edit)
+
+            val cancel = view.findViewById<Button>(R.id.cancel)
+            val search = view.findViewById<Button>(R.id.search)
+            cancel.setOnClickListener{
+                popupWindow.dismiss()
+            }
+            search.setOnClickListener{
+                val intent = Intent(this, PostNameSearchActivity::class.java)
+                intent.putExtra("name", name_edit.text.toString())
+                API.queryItemByName(name_edit.text.toString(), API.currentUser.storeID)
+                startActivity(intent)
+                popupWindow.dismiss()
+            }
+            TransitionManager.beginDelayedTransition(activity_main)
+            if(!isFinishing()) {
+                popupWindow.showAtLocation(
+                    activity_main, // Location to display popup window
+                    Gravity.CENTER, // Exact position of layout to display popup
+                    0, // X offset
+                    0 // Y offset
+                )
+                popupWindow.dimBehind()
+            }
+        }
+    }
+
+    fun PopupWindow.dimBehind() {
+        val container = contentView.rootView
+        val context = contentView.context
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val p = container.layoutParams as WindowManager.LayoutParams
+        p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        p.dimAmount = 0.3f
+        wm.updateViewLayout(container, p)
     }
 }

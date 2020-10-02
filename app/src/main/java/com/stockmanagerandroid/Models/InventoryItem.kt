@@ -1,5 +1,7 @@
 package com.stockmanagerandroid.Models
 
+import android.util.Log
+
 class InventoryItem {
     var name : String = ""
     var userDesignatedID : String = ""
@@ -16,7 +18,11 @@ class InventoryItem {
         json["backstockQuantity"] = this.backstockQuantity
         json["customerAccessibleQuantity"] = this.customerAccessibleQuantity
         if (this.locations != null) {
-            json["locations"] = this.locations!!
+            var locationsMap = ArrayList<HashMap<String, Any>>()
+            for(location in this.locations!!) {
+                locationsMap.add(location.json())
+            }
+            json["locations"] = locationsMap
         }
         json["id"] = this.id
         json["dateLastPurchased"] = this.dateLastPurchased

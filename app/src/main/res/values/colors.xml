@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6200EE</color>
+    <color name="colorPrimary">#FFFFDC26</color>
     <color name="colorPrimaryDark">#FF1c1c1e</color>
     <color name="colorAccent">#FF03DAC5</color>
     <color name="white">#FFFFFFFF</color>
@@ -8,4 +8,10 @@
     <color name="gold">#FFFFB311</color>
     <color name="yellow">#FFFFDC26</color>
     <color name="number_button">#CC000000</color>
+    <color name="appleSystemGreenDark">#34c759</color>
+    <color name="appleSystemGreenLight">#30d158</color>
+    <color name="appleSystemRedDark">#ff3a30</color>
+    <color name="appleSystemRedLight">#ff443a</color>
+    <color name="appleSystemBlueDark">#007bff</color>
+    <color name="appleSystemBlueLight">#0a84ff</color>
 </resources>

@@ -1,30 +1,40 @@
 package com.stockmanagerandroid.Services
 
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.stockmanagerandroid.Adapters.LocationsAdapter
 import com.stockmanagerandroid.Models.InventoryItem
+import com.stockmanagerandroid.Models.Location
 import com.stockmanagerandroid.Models.User
+import kotlinx.coroutines.Runnable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import org.json.JSONObject
-import kotlinx.coroutines.*
 import okhttp3.Response
-import java.lang.Thread.sleep
+import org.json.JSONObject
+import java.util.*
+import kotlin.collections.HashMap
 
 
 object API {
 
     private val url = "https://smapi.ngrok.io"
     val itemSearchedFor = MutableLiveData<InventoryItem>()
+    var modifiedItem = InventoryItem()
     var currentUser = User()
     val authenticated = MutableLiveData<Boolean>()
     val accountCreated = MutableLiveData<Boolean>()
     val imageData = MutableLiveData<ByteArray>()
     var errorString = ""
+    var changesMade = false
+    var mAdapter = LocationsAdapter()
+    val locationDescriptionToEdit = MutableLiveData<Location>()
+    val locationToMove = MutableLiveData<Location>()
+    val nameItemsSearchedFor = MutableLiveData<ArrayList<InventoryItem>>()
+    val nameToImage = MutableLiveData<HashMap<String, ByteArray?>>()
 
     fun queryItemByID(userDesignatedID: String, storeID: String) {
         var returnItem: InventoryItem? = null
@@ -50,6 +60,70 @@ object API {
                 val itemResponse = itemCall.execute()
                 val item = objectMapper.readValue(itemResponse.body?.string(), InventoryItem::class.java)
                 itemSearchedFor.postValue(item)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        })
+
+        thread.start()
+    }
+
+    fun queryItemByName(name: String, storeID: String) {
+        var returnItem: InventoryItem? = null
+
+        val thread = Thread(Runnable {
+            try {
+
+                val objectMapper = ObjectMapper()
+                val jsonObject = JSONObject()
+                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                jsonObject.put("name", name)
+                jsonObject.put("storeID", storeID)
+
+                val client = OkHttpClient()
+                val itemRequestBody = RequestBody.create(json, jsonObject.toString())
+
+                val itemRequest = Request.Builder()
+                    .url(url + "/item/query/name")
+                    .post(itemRequestBody)
+                    .build()
+
+                val itemCall = client.newCall(itemRequest)
+                val itemResponse = itemCall.execute()
+                val results : List<InventoryItem> = objectMapper.readValue(itemResponse.body?.string(), object : TypeReference<List<InventoryItem>>(){})
+                nameItemsSearchedFor.postValue(results as ArrayList<InventoryItem>)
+
+                for(result in results) {
+                    val thread = Thread(Runnable {
+                        try {
+                            val jsonObject = JSONObject()
+                            val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                            val imageClient = OkHttpClient()
+                            jsonObject.put("id", result.id)
+                            val imageRequestBody = RequestBody.create(json, jsonObject.toString())
+
+                            val imageRequest = Request.Builder()
+                                .url(url + "/item/image")
+                                .post(imageRequestBody)
+                                .build()
+
+                            val imageCall = imageClient.newCall(imageRequest)
+                            val imageResponse = imageCall.execute()
+                            var nTI = HashMap<String, ByteArray?>()
+                            if(nameToImage.value != null) {
+                                nTI = nameToImage.value!!
+                            }
+                            nTI[result.name] = imageResponse.body?.bytes()
+                            nameToImage.postValue(nTI)
+
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    })
+
+                    thread.start()
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -145,6 +219,8 @@ object API {
                 }
                 jsonObject.put("storeID", storeID)
                 val body = RequestBody.create(json, jsonObject.toString())
+                val data = jsonObject.toString()
+                Log.d("data", data)
 
                 val imageRequest = Request.Builder()
                     .url(url + "/item/update")

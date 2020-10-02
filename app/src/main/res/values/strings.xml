@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">StockManagerAndroid</string>
     <string name="create_account"><u>Create Account</u></string>
+    <string name="search_by_name"><u>Search By Name</u></string>
 </resources>
 
 
