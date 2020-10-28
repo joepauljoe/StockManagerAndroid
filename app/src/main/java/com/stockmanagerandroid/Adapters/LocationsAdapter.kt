@@ -58,6 +58,7 @@ class LocationsAdapter() : RecyclerView.Adapter<LocationsAdapter.LocationsListIt
                 API.modifiedItem.locations!!.remove(location)
                 API.mAdapter.keysList = API.modifiedItem.locations!!
                 API.mAdapter.notifyDataSetChanged()
+                API.changesMade = true
             }
             itemView.move_location_button.setOnClickListener{
                 API.locationToMove.postValue(location)

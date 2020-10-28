@@ -214,7 +214,7 @@ object API {
                 val jsonObject = JSONObject()
                 val json = "application/json; charset=utf-8".toMediaTypeOrNull()
                 val imageClient = OkHttpClient()
-                for ((key, value) in item.json()) {
+                for ((key, value) in ExtensionFunctions.itemJson(item)) {
                     jsonObject.put(key, value)
                 }
                 jsonObject.put("storeID", storeID)

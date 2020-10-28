@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
@@ -30,13 +30,26 @@
         android:id="@+id/confirm_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Would You Like to Save Your Changes?"
+        android:text="Confirm Changes?"
         android:textAlignment="center"
         android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/top_horizontal"
         app:layout_constraintRight_toLeftOf="@id/center_vertical"
         app:layout_constraintLeft_toRightOf="@id/center_vertical"/>
+
+    <TextView
+        android:id="@+id/changes_made"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/confirm_text"
+        app:layout_constraintLeft_toLeftOf="@id/center_vertical"
+        app:layout_constraintRight_toRightOf="@id/center_vertical"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        />
 
     <Button
         android:id="@+id/cancel"
@@ -50,10 +63,10 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintRight_toLeftOf="@id/center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/confirm_text"
+        app:layout_constraintTop_toBottomOf="@id/changes_made"
         app:layout_constraintBottom_toTopOf="@id/bottom_horizontal"
         android:textAllCaps="false"
-        android:text="No"/>
+        android:text="Cancel"/>
 
     <Button
         android:id="@+id/save"
@@ -67,9 +80,9 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/confirm_text"
+        app:layout_constraintTop_toBottomOf="@id/changes_made"
         app:layout_constraintBottom_toTopOf="@id/bottom_horizontal"
         android:textAllCaps="false"
-        android:text="Yes"/>
+        android:text="Submit"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import com.stockmanagerandroid.Models.Location
 import com.stockmanagerandroid.R
 import com.stockmanagerandroid.Services.API
 import com.stockmanagerandroid.Services.Enums
+import com.stockmanagerandroid.Services.ExtensionFunctions
 import com.stockmanagerandroid.Services.Images.rotateBitmap
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.layout_add_location.*
@@ -32,6 +33,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     private var typeIndex = 0
     private var accessibilityIndex = 0
+    private var item = InventoryItem()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,20 +68,8 @@ class ItemDetailActivity : AppCompatActivity() {
             }
         })
 
-        val item = API.itemSearchedFor.value!!
-        API.modifiedItem.name = item.name
-        API.modifiedItem.customerAccessibleQuantity = item.customerAccessibleQuantity
-        API.modifiedItem.backstockQuantity = item.backstockQuantity
-        API.modifiedItem.dateLastPurchased = item.dateLastPurchased
-        API.modifiedItem.id = item.id
-        API.modifiedItem.userDesignatedID = item.userDesignatedID
-        if(item.locations != null) {
-            var locations = ArrayList<Location>()
-            for(location in item.locations!!) {
-                locations.add(location)
-            }
-            API.modifiedItem.locations = locations
-        }
+        item = API.itemSearchedFor.value!!
+        API.modifiedItem = ExtensionFunctions.copyItem(item)
         dynamic_ISQ.text = (API.modifiedItem.backstockQuantity + API.modifiedItem.customerAccessibleQuantity).toString()
         dynamic_id.text = API.modifiedItem.userDesignatedID
         dynamic_name.text = API.modifiedItem.name
@@ -395,7 +385,11 @@ class ItemDetailActivity : AppCompatActivity() {
                     location.spot = dynamic_spot.text.toString()
                     location.type = dynamic_type.text.toString()
                     API.modifiedItem.locations!!.removeAt(index)
-                    API.modifiedItem.locations!![index] = location
+                    if(index == API.modifiedItem.locations!!.size) {
+                        API.modifiedItem.locations!!.add(location)
+                    } else {
+                        API.modifiedItem.locations!![index] = location
+                    }
                     API.mAdapter = LocationsAdapter()
                     API.mAdapter.keysList = API.modifiedItem.locations!!
                     API.mAdapter.notifyDataSetChanged()
@@ -455,6 +449,9 @@ class ItemDetailActivity : AppCompatActivity() {
 
             val save = view.findViewById<Button>(R.id.save)
             val cancel = view.findViewById<Button>(R.id.cancel)
+            val changes_made = view.findViewById<TextView>(R.id.changes_made)
+            changes_made.text = ExtensionFunctions.getConfirmationString(item, API.modifiedItem)
+            Log.d("Changes Made", changes_made.text.toString())
             save.setOnClickListener{
                 API.itemSearchedFor.postValue(API.modifiedItem)
                 Log.d("UPDATING", "ITEM")
