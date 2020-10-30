@@ -15,6 +15,13 @@
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/center_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +53,33 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.42" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <TextView
+        android:id="@+id/static_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Source"
+        app:layout_constraintLeft_toLeftOf="@id/center_line"
+        app:layout_constraintRight_toRightOf="@id/center_line"/>
+
     <TextView
         android:id="@+id/static_aisle"
         android:layout_width="wrap_content"
@@ -55,7 +89,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:text="Aisle:"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/static_source"
         app:layout_constraintLeft_toRightOf="@id/guideline_to_change"/>
 
     <TextView
@@ -66,7 +100,7 @@
         android:layout_marginTop="15dp"
         android:textColor="@color/white"
         android:text="Placeholder for Aisle"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/static_source"
         app:layout_constraintRight_toLeftOf="@id/guideline5"/>
 
     <TextView
@@ -136,49 +170,143 @@
         app:layout_constraintRight_toLeftOf="@id/guideline5"/>
 
     <TextView
-        android:id="@+id/static_accessibility"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:text="Accessibility:"
-        android:paddingBottom="12dp"
-        app:layout_constraintTop_toBottomOf="@id/static_type"
-        app:layout_constraintLeft_toRightOf="@id/guideline_to_change"
-        app:layout_constraintRight_toLeftOf="@id/guideline5"/>
-
-    <TextView
-        android:id="@+id/dynamic_accessibility"
+        android:id="@+id/spacer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:text="Placeholder for Accessibility"
         app:layout_constraintTop_toBottomOf="@id/dynamic_type"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/static_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Destination"
+        app:layout_constraintTop_toBottomOf="@id/spacer"
+        app:layout_constraintLeft_toLeftOf="@id/center_line"
+        app:layout_constraintRight_toRightOf="@id/center_line"/>
+
+    <TextView
+        android:id="@+id/static_aisle_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Aisle:"
+        app:layout_constraintTop_toBottomOf="@id/static_destination"
+        app:layout_constraintLeft_toRightOf="@id/guideline_to_change"/>
+
+    <TextView
+        android:id="@+id/dynamic_aisle_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        android:text="Placeholder for Aisle"
+        app:layout_constraintTop_toBottomOf="@id/static_destination"
         app:layout_constraintRight_toLeftOf="@id/guideline5"/>
 
     <TextView
-        android:id="@+id/static_description"
+        android:id="@+id/static_aisle_section_dest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:text="Description:"
-        android:paddingBottom="12dp"
-        app:layout_constraintTop_toTopOf="@id/dynamic_description"
+        android:text="Aisle Section:"
+        app:layout_constraintTop_toBottomOf="@id/static_aisle_dest"
         app:layout_constraintLeft_toRightOf="@id/guideline_to_change"
         app:layout_constraintRight_toLeftOf="@id/guideline5"/>
 
     <TextView
-        android:id="@+id/dynamic_description"
+        android:id="@+id/dynamic_aisle_section_dest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/dynamic_accessibility"
+        android:text="Placeholder for Aisle Section"
+        app:layout_constraintTop_toBottomOf="@id/dynamic_aisle_dest"
         app:layout_constraintRight_toLeftOf="@id/guideline5"/>
+
+    <TextView
+        android:id="@+id/static_spot_dest"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Spot:"
+        app:layout_constraintTop_toBottomOf="@id/static_aisle_section_dest"
+        app:layout_constraintLeft_toRightOf="@id/guideline_to_change"
+        app:layout_constraintRight_toLeftOf="@id/guideline5"/>
+
+    <TextView
+        android:id="@+id/dynamic_spot_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:text="Placeholder for Spot"
+        app:layout_constraintTop_toBottomOf="@id/dynamic_aisle_section_dest"
+        app:layout_constraintRight_toLeftOf="@id/guideline5"/>
+
+    <TextView
+        android:id="@+id/static_type_dest"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Type:"
+        app:layout_constraintTop_toBottomOf="@id/static_spot_dest"
+        app:layout_constraintLeft_toRightOf="@id/guideline_to_change"
+        app:layout_constraintRight_toLeftOf="@id/guideline5"/>
+
+    <TextView
+        android:id="@+id/dynamic_type_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:text="Placeholder for Type"
+        app:layout_constraintTop_toBottomOf="@id/dynamic_spot_dest"
+        app:layout_constraintRight_toLeftOf="@id/guideline5"/>
+
+    <TextView
+        android:id="@+id/spacer_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dynamic_type_dest"
+        android:textSize="12sp"/>
+
+    <Button
+        android:id="@+id/complete"
+        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="64dp"
+        android:enabled="true"
+        android:textSize="20sp"
+        android:text="Task Complete"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/blue_gradient_button"
+        app:layout_constraintLeft_toRightOf="@id/guideline7"
+        app:layout_constraintRight_toLeftOf="@id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/spacer_dest" />
+
+    <TextView
+        android:id="@+id/spacer_dest_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/complete"
+        android:textSize="12sp"/>
 
     <View
         android:id="@+id/divider"
@@ -187,6 +315,7 @@
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/guideline4"
-        app:layout_constraintRight_toRightOf="@id/guideline3" />
+        app:layout_constraintRight_toRightOf="@id/guideline3"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

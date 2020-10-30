@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.PostNameSearchActivity"></activity>
+        <activity android:name=".Activities.Tasks"></activity>
+        <activity android:name=".Activities.PostNameSearchActivity" />
         <activity android:name=".Activities.CreateAccountActivity" />
         <activity android:name=".Activities.ItemDetailActivity" />
         <activity android:name=".Activities.LoginActivity">

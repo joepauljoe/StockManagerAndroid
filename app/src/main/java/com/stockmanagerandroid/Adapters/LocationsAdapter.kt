@@ -30,39 +30,8 @@ class LocationsAdapter() : RecyclerView.Adapter<LocationsAdapter.LocationsListIt
             textView2.text = location.aisleSection
             textView3.text = location.type
             textView4.text = location.accessibility
-
-            if(location.description != "") {
-                itemView.dynamic_description.text = location.description
-                itemView.dynamic_description.visibility = View.VISIBLE
-                itemView.edit.visibility = View.VISIBLE
-                itemView.static_description.visibility = View.VISIBLE
-                itemView.more_details_button.visibility = View.GONE
-
-                itemView.edit.setOnClickListener{
-                    API.locationDescriptionToEdit.postValue(location)
-                }
-            }
-
-            itemView.more_details_button.setOnClickListener {
-                itemView.dynamic_description.text = location.description
-                itemView.dynamic_description.visibility = View.VISIBLE
-                itemView.edit.visibility = View.VISIBLE
-                itemView.static_description.visibility = View.VISIBLE
-                itemView.more_details_button.visibility = View.GONE
-
-                itemView.edit.setOnClickListener{
-                    API.locationDescriptionToEdit.postValue(location)
-                }
-            }
-            itemView.remove_location_button.setOnClickListener {
-                API.modifiedItem.locations!!.remove(location)
-                API.mAdapter.keysList = API.modifiedItem.locations!!
-                API.mAdapter.notifyDataSetChanged()
-                API.changesMade = true
-            }
-            itemView.move_location_button.setOnClickListener{
-                API.locationToMove.postValue(location)
-            }
+            itemView.dynamic_spot.text = location.spot
+            itemView.dynamic_description.text = location.description
         }
 
     }

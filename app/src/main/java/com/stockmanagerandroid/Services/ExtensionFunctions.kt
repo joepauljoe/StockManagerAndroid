@@ -2,6 +2,7 @@ package com.stockmanagerandroid.Services
 
 import com.stockmanagerandroid.Models.InventoryItem
 import com.stockmanagerandroid.Models.Location
+import org.json.JSONArray
 
 object ExtensionFunctions {
 
@@ -27,7 +28,7 @@ object ExtensionFunctions {
             for(location in item.locations!!) {
                 locationsMap.add(locationJson(location))
             }
-            json["locations"] = locationsMap
+            json["locations"] = JSONArray(locationsMap.toArray())
         }
         json["id"] = item.id
         json["dateLastPurchased"] = item.dateLastPurchased
@@ -51,38 +52,6 @@ object ExtensionFunctions {
             returnString += "Added " + (newItem.customerAccessibleQuantity - oldItem.customerAccessibleQuantity) + " unit(s) to customer accessible locations\n"
         } else if(oldItem.customerAccessibleQuantity > newItem.customerAccessibleQuantity) {
             returnString += "Removed " + (oldItem.customerAccessibleQuantity - newItem.customerAccessibleQuantity) + " unit(s) from customer accessible locations\n"
-        }
-
-        if(oldItem.locations == newItem.locations) {
-            return returnString
-        } else if ((oldItem.locations == null || oldItem.locations!!.size == 0) && (newItem.locations != null && newItem.locations!!.size > 0)) {
-            returnString += "Added " + newItem.locations!!.size + " new locations for this item\n\n"
-        } else if ((newItem.locations == null || newItem.locations!!.size == 0) && (oldItem.locations != null && oldItem.locations!!.size > 0)) {
-            returnString += "Removed " + oldItem.locations!!.size + " locations for this item\n\n"
-        } else if ((oldItem.locations != null && oldItem.locations!!.size != 0) && (newItem.locations != null && newItem.locations!!.size != 0) && oldItem.locations!!.size > newItem.locations!!.size) {
-            returnString += "Removed " + (oldItem.locations!!.size - newItem.locations!!.size) + " locations for this item\n\n"
-        } else if ((oldItem.locations != null && oldItem.locations!!.size != 0) && (newItem.locations != null && newItem.locations!!.size != 0) && newItem.locations!!.size > oldItem.locations!!.size) {
-            returnString += "Added " + (newItem.locations!!.size - oldItem.locations!!.size) + " locations for this item\n\n"
-        }
-
-        if ((oldItem.locations != null && oldItem.locations!!.size != 0) && (newItem.locations != null && newItem.locations!!.size != 0)) {
-            var modifiedLocations = 0
-            if(oldItem.locations!!.size > newItem.locations!!.size) {
-                for(location in newItem.locations!!) {
-                    if(!oldItem.locations!!.contains(location)) {
-                        modifiedLocations++
-                    }
-                }
-            } else if (newItem.locations!!.size > oldItem.locations!!.size) {
-                for(location in oldItem.locations!!) {
-                    if(!newItem.locations!!.contains(location)) {
-                        modifiedLocations++
-                    }
-                }
-            }
-            if(modifiedLocations > 0) {
-                returnString += "Modified " + modifiedLocations + " locations\n\n"
-            }
         }
 
         return returnString

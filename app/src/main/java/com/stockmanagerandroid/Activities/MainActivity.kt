@@ -159,6 +159,11 @@ class MainActivity : AppCompatActivity() {
                 popupWindow.dimBehind()
             }
         }
+
+        tasks.setOnClickListener{
+            val intent = Intent(this, Tasks::class.java)
+            startActivity(intent)
+        }
     }
 
     fun PopupWindow.dimBehind() {

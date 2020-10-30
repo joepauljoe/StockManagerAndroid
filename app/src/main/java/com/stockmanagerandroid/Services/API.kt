@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.stockmanagerandroid.Adapters.LocationsAdapter
 import com.stockmanagerandroid.Models.InventoryItem
-import com.stockmanagerandroid.Models.Location
+import com.stockmanagerandroid.Models.Task
 import com.stockmanagerandroid.Models.User
 import kotlinx.coroutines.Runnable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,10 +32,10 @@ object API {
     var errorString = ""
     var changesMade = false
     var mAdapter = LocationsAdapter()
-    val locationDescriptionToEdit = MutableLiveData<Location>()
-    val locationToMove = MutableLiveData<Location>()
     val nameItemsSearchedFor = MutableLiveData<ArrayList<InventoryItem>>()
     val nameToImage = MutableLiveData<HashMap<String, ByteArray?>>()
+    var tasksList = ArrayList<Task>()
+    val tasksFetched = MutableLiveData<Boolean>()
 
     fun queryItemByID(userDesignatedID: String, storeID: String) {
         var returnItem: InventoryItem? = null
@@ -208,36 +209,6 @@ object API {
         thread.start()
     }
 
-    fun updateItem(item: InventoryItem, storeID: String) {
-        val thread = Thread(Runnable {
-            try {
-                val jsonObject = JSONObject()
-                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
-                val imageClient = OkHttpClient()
-                for ((key, value) in ExtensionFunctions.itemJson(item)) {
-                    jsonObject.put(key, value)
-                }
-                jsonObject.put("storeID", storeID)
-                val body = RequestBody.create(json, jsonObject.toString())
-                val data = jsonObject.toString()
-                Log.d("data", data)
-
-                val imageRequest = Request.Builder()
-                    .url(url + "/item/update")
-                    .post(body)
-                    .build()
-
-                val call = imageClient.newCall(imageRequest)
-                call.execute()
-
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-        })
-
-        thread.start()
-    }
-
     fun createAccount(invitationCode: String, fName: String, lName: String, email: String, password: String, confirmPassword: String) {
         errorString = ""
         if (password != confirmPassword) {
@@ -277,6 +248,127 @@ object API {
                     print(response)
                     accountCreated.postValue(false)
                 }
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        })
+
+        thread.start()
+    }
+
+    fun increment(userDesignatedID: String, value: Int, type: String) {
+
+        val thread = Thread(Runnable {
+            try {
+                val jsonObject = JSONObject()
+                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val client = OkHttpClient()
+                jsonObject.put("userDesignatedID", userDesignatedID)
+                jsonObject.put("value", value)
+                jsonObject.put("type", type)
+                jsonObject.put("storeID", currentUser.storeID)
+                val body = RequestBody.create(json, jsonObject.toString())
+
+                val request = Request.Builder()
+                    .url(url + "/item/increment")
+                    .post(body)
+                    .build()
+
+                val call = client.newCall(request)
+                call.execute()
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        })
+
+        thread.start()
+    }
+
+    fun decrement(userDesignatedID: String, value: Int, type: String) {
+
+        val thread = Thread(Runnable {
+            try {
+                val jsonObject = JSONObject()
+                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val client = OkHttpClient()
+                jsonObject.put("userDesignatedID", userDesignatedID)
+                jsonObject.put("value", value)
+                jsonObject.put("type", type)
+                jsonObject.put("storeID", currentUser.storeID)
+                val body = RequestBody.create(json, jsonObject.toString())
+
+                val request = Request.Builder()
+                    .url(url + "/item/decrement")
+                    .post(body)
+                    .build()
+
+                val call = client.newCall(request)
+                call.execute()
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        })
+
+        thread.start()
+    }
+
+    fun getTasks() {
+
+        val thread = Thread(Runnable {
+            try {
+
+                val objectMapper = ObjectMapper()
+                val module = SimpleModule()
+                module.addDeserializer<Task>(Task::class.java, Deserializer())
+                objectMapper.registerModule(module)
+                val jsonObject = JSONObject()
+                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                jsonObject.put("userID", currentUser.userID)
+                jsonObject.put("storeID", currentUser.storeID)
+
+                val client = OkHttpClient()
+                val taskRequestBody = RequestBody.create(json, jsonObject.toString())
+
+                val itemRequest = Request.Builder()
+                    .url(url + "/user/tasks/get/outstanding")
+                    .post(taskRequestBody)
+                    .build()
+
+                val taskCall = client.newCall(itemRequest)
+                val itemResponse = taskCall.execute()
+                val results : List<Task> = objectMapper.readValue(itemResponse.body?.string(), object : TypeReference<List<Task>>(){})
+                tasksList = results as ArrayList<Task>
+                tasksFetched.postValue(true)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        })
+
+        thread.start()
+    }
+
+    fun completeTask(taskID: String) {
+
+        val thread = Thread(Runnable {
+            try {
+                val jsonObject = JSONObject()
+                val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val client = OkHttpClient()
+                jsonObject.put("taskID", taskID)
+                jsonObject.put("storeID", currentUser.storeID)
+                val body = RequestBody.create(json, jsonObject.toString())
+
+                val request = Request.Builder()
+                    .url(url + "/task/complete")
+                    .post(body)
+                    .build()
+
+                val call = client.newCall(request)
+                call.execute()
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()

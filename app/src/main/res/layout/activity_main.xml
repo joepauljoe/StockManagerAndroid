@@ -56,6 +56,7 @@
         app:layout_constraintGuide_percent=".92" />
 
     <ImageView
+        android:id="@+id/tasks"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/cog"
